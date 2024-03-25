@@ -85,7 +85,7 @@ public class Main {
 // Сортировка списка городов по федеральному округу и наименованию города в алфавитном порядке по убыванию с учетом регистра
         cities.sort(new RegionCityComparator());
 
-// Вывод списка городов в консоль
+// Выводим списка городов в консоль
         for (City city : cities) {
             System.out.println(city.toString().replace(", ", ";"));
         }
