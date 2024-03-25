@@ -1,9 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.Comparator; // Добавляем импорт Comparator
+import java.util.Comparator;
 
 class City {
     private String name;
@@ -110,6 +112,22 @@ public class Main {
             System.out.println("[" + maxPopulationIndex + "] = " + maxPopulation);
         } else {
             System.out.println("Нет данных о городах.");
+        }
+
+        // Поиск количества городов в разрезе регионов
+        Map<String, Integer> regionCityCount = new HashMap<>();
+        for (City city : cities) {
+            String region = city.getRegion();
+            if (regionCityCount.containsKey(region)) {
+                regionCityCount.put(region, regionCityCount.get(region) + 1);
+            } else {
+                regionCityCount.put(region, 1);
+            }
+        }
+
+        // Вывод количества городов в разрезе регионов
+        for (Map.Entry<String, Integer> entry : regionCityCount.entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue());
         }
     }
 }
