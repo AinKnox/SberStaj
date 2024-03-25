@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Comparator;
 
 class City {
     private String name;
@@ -23,6 +24,28 @@ class City {
     public String toString() {
         return "City{name='" + name + "', region='" + region + "', district='" + district + "', population=" + population + ", foundation='" + foundation + "'}";
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+}
+
+// Класс, реализующий компаратор для сортировки по федеральному округу и наименованию города
+class RegionCityComparator implements Comparator<City> {
+    @Override
+    public int compare(City city1, City city2) {
+// Сначала сравниваем по федеральному округу
+        int compareRegion = city1.getRegion().compareTo(city2.getRegion());
+        if (compareRegion != 0) {
+            return compareRegion;
+        }
+// Если федеральные округа равны, сравниваем по наименованию города с учетом регистра
+        return city2.getName().compareTo(city1.getName());
+    }
 }
 
 public class Main {
@@ -39,7 +62,7 @@ public class Main {
 // Проверяем, что строка содержит нужное количество частей
                 if (parts.length != 6) {
                     System.out.println("Ошибка чтения строки: неверное количество значений");
-                    continue; // Пропускаем эту строку и переходим к следующей
+                    continue;
                 }
 
                 String name = parts[1];
@@ -59,6 +82,10 @@ public class Main {
             System.out.println("Ошибка преобразования числа: " + e.getMessage());
         }
 
+// Сортировка списка городов по федеральному округу и наименованию города в алфавитном порядке по убыванию с учетом регистра
+        cities.sort(new RegionCityComparator());
+
+// Вывод списка городов в консоль
         for (City city : cities) {
             System.out.println(city.toString().replace(", ", ";"));
         }
